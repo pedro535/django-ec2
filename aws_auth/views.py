@@ -10,6 +10,12 @@ def get_books(request):
     return Response(serializer.data)
 
 
+def get_book(request, id):
+    book = Book.objects.get(id=id)
+    serializer = BookSerializer(book)
+    return Response(serializer.data)
+
+
 def post_book(request):
     serializer = BookSerializer(data=request.data)
     if serializer.is_valid():
@@ -38,9 +44,12 @@ def insert_books(request):
 
 
 @api_view(['GET', 'POST', 'DELETE'])
-def handle(request):
+def handle(request, id=None):
     if request.method == 'GET':
-        return get_books(request)
+        if id:
+            return get_book(request, id)
+        else:
+            return get_books(request)
     elif request.method == 'POST':
         return post_book(request)
     elif request.method == 'DELETE':
