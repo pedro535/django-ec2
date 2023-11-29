@@ -5,21 +5,30 @@ from aws_auth.models import Book, UserFile
 import boto3
 from botocore.client import Config
 from django.conf import settings
+import logging
+
+logger = logging.getLogger('django')
 
 
 def get_books(request):
+    logger.info('GET /books')
+
     books = Book.objects.all()
     serializer = BookSerializer(books, many=True)
     return Response(serializer.data)
 
 
 def get_book(request, id):
+    logger.info(f'GET /books/{id}')
+
     book = Book.objects.get(id=id)
     serializer = BookSerializer(book)
     return Response(serializer.data)
 
 
 def post_book(request):
+    logger.info('POST /books')
+
     serializer = BookSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -34,6 +43,8 @@ def delete_all_books(request):
 
 @api_view(['GET'])
 def insert_books(request):
+    logger.info('GET /insert')
+
     book1 = Book(title='The Hobbit', author='J.R.R. Tolkien')
     book1.save()
 
