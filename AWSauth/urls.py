@@ -7,11 +7,11 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/books/', handle, name='handle'),
-    path('api/v1/books/<int:id>/', handle, name='handle'),
-    path('api/v1/insert/', insert_books, name='insert_books'),
-    path('api/v1/files/', handle_files, name='files'),
-    path('api/v1/files/<int:id>/', get_file, name='get_file'),
+    path('books/', handle, name='handle'),
+    path('books/<int:id>/', handle, name='handle'),
+    path('insert/', insert_books, name='insert_books'),
+    path('files/', handle_files, name='files'),
+    path('files/<int:id>/', get_file, name='get_file'),
 ]
 
 if settings.DEBUG:
